@@ -1,38 +1,90 @@
 package cz.czechitas.ukol3;
 
-/**
- * Spouštěcí třída celého programu
- */
+import cz.czechitas.ukol3.model.Disk;
+import cz.czechitas.ukol3.model.Pamet;
+import cz.czechitas.ukol3.model.Pocitac;
+import cz.czechitas.ukol3.model.Procesor;
+
 public class HlavniProgram {
+    public static void main(String[] args) {
+        Pocitac dasinPocitac = new Pocitac();
 
-    public static void main(String... args) {
-            Pocitac dasinPocitac = new Pocitac(1000);
-            System.out.println(dasinPocitac.toString());
-            dasinPocitac.zapniSe();      // Vypíše chybu, protože počítač v tuto chvíli nemá všechny povinné součásti.
+        System.out.println(dasinPocitac.toString());
+        dasinPocitac.zapniSe();      // Vypíše chybu, protože počítač v tuto chvíli nemá všechny povinné součásti.
+        System.out.println(dasinPocitac);
 
-            Procesor dasinProcesor = new Procesor();
 
-            dasinProcesor.setRychlost(3_200_000_000L);
-            dasinProcesor.setVyrobce("Apple");
+        Procesor dasinProcesor = new Procesor();
 
-            Pamet dasinaPamet = new Pamet();
-            dasinaPamet.setKapacita(68_719_476_736L);
+        dasinProcesor.setRychlost(3_200_000_000L);
+        dasinProcesor.setVyrobce("Apple");
 
-            Disk dasinDisk = new Disk();
-            dasinDisk.setKapacita(274_877_906_944L);
+        Pamet dasinaPamet = new Pamet();
+        dasinaPamet.setKapacita(68_719_476_736L);
 
-            dasinPocitac.setCpu(dasinProcesor);
-            dasinPocitac.setRam(dasinaPamet);
-            dasinPocitac.setPevnyDisk(dasinDisk);
+        Disk dasinDisk = new Disk();
+        dasinDisk.setKapacita(1000L);
 
-            System.out.println(dasinPocitac.toString());
+        dasinPocitac.setCpu(dasinProcesor);
+        dasinPocitac.zapniSe();
+        System.out.println(dasinPocitac);
 
-            dasinPocitac.zapniSe();
-            dasinPocitac.zapniSe();      // Vypíše chybu, protože počítač už běží
-            System.out.println(dasinPocitac.toString());
-            dasinPocitac.vypniSe();
+        dasinPocitac.setRam(dasinaPamet);
+        System.out.println("Pokouším se zapnout PC bez disku");
+        dasinPocitac.zapniSe();
+        System.out.println(dasinPocitac);
 
-            dasinPocitac.vypniSe();      // Nevypíše chybu, ale nic neprovede, protože počítač už je vypnutý
-        }
+        dasinPocitac.setPevnyDisk(dasinDisk);
+        dasinPocitac.zapniSe();
+        System.out.println(dasinPocitac);
+
+        // Zobrazím počáteční svat počítače
+        System.out.println("Počáteční stav Pc: ");
+        System.out.println(dasinPocitac);
+        System.out.println("________________________________");
+
+        //Zapnu Pc
+        dasinPocitac.zapniSe(); //chyba již je zapnutý
+        System.out.println(dasinPocitac);
+        System.out.println("________________________________");
+
+        // Vytvořím soubor a různých velokostech
+        dasinPocitac.vytvorSouborOVelikosti(400);
+        System.out.println(dasinPocitac);
+
+        dasinPocitac.vytvorSouborOVelikosti(700); // vychodí chybu = součet není 1000
+        System.out.println(dasinPocitac);
+
+        dasinPocitac.vytvorSouborOVelikosti(600);
+
+        System.out.println("________________________________");
+        System.out.println("Stav po vytvoření souboru: ");
+        System.out.println(dasinPocitac);
+        System.out.println("________________________________");
+
+        // Mazání souboru
+        dasinPocitac.vymazSouboryOVelikosti(100);
+        dasinPocitac.vymazSouboryOVelikosti(50); // využité místo 850
+
+        System.out.println("Stav po vytvoření souboru: ");
+        System.out.println(dasinPocitac);
+        System.out.println("________________________________");
+
+        dasinPocitac.vymazSouboryOVelikosti(900); //chyba
+        System.out.println(dasinPocitac);
+
+        dasinPocitac.vymazSouboryOVelikosti(850);
+        System.out.println(dasinPocitac);
+
+        // Vypneme Pc
+        dasinPocitac.vypniSe();
+        System.out.println("________________________________");
+
+        // Zkusím vytvořit soubor, když je pc vypnuté
+        dasinPocitac.vytvorSouborOVelikosti(400); // vyhodí chybu
+
+        dasinPocitac.vymazSouboryOVelikosti(850); //chyba
     }
 
+
+}
